@@ -3,18 +3,6 @@
 <head lang="en">
   <meta charset="UTF-8">
   <title></title>
-  <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-  <script>
-    const theme = window.location.search.replace(/.*theme=(\w+).*/, '$1') || 'lumo';
-    document.write('<link rel="import" href="../../theme/' + theme + '/vaadin-accordion.html">');
-
-    window.addEventListener('WebComponentsReady', function() {
-      setTimeout(function() {
-        window.ShadyDOM && window.ShadyDOM.flush(); // Force DOM composition
-        window.webComponentsAreReady = true; // Checked in gemini before capture callback
-      });
-    });
-  </script>
 </head>
 
 <body>
@@ -43,5 +31,10 @@
       </vaadin-accordion-panel>
     </vaadin-accordion>
   </span>
+
+  <script type="module">
+    const theme = location.search.replace(/.*theme=(\w+).*/, '$1') || 'lumo';
+    import('../../theme/' + theme + '/vaadin-accordion.js');
+  </script>
 
 </body>
