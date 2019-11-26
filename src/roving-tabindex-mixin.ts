@@ -1,23 +1,31 @@
 import { LitElement } from 'lit-element';
-import { KeyboardDirectionInterface, getAvailableIndex, isFocusable, $focus } from './keyboard-direction-mixin';
-import { $itemsChanged, SlottedItemsInterface } from './slotted-items-mixin';
+import {
+  KeyboardDirectionClass,
+  KeyboardDirectionInterface,
+  getAvailableIndex,
+  isFocusable
+} from './keyboard-direction-mixin';
+import { SlottedItemsClass, SlottedItemsInterface } from './slotted-items-mixin';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Constructor<T = object> = new (...args: any[]) => T;
 
-const $setFocusable = Symbol('setFocusable');
+export abstract class RovingTabIndexClass extends LitElement {
+  protected _setFocusable?(idx: number): void;
 
-const $setTabIndex = Symbol('setTabIndex');
-
-export interface RovingTabIndexInterface {
-  [$setFocusable](idx: number): void;
-  [$setTabIndex](item: HTMLElement): void;
+  protected _setTabIndex?(item: HTMLElement): void;
 }
 
-export type RovingTabIndexConstructor = Constructor<RovingTabIndexInterface>;
+export type RovingTabIndexConstructor = Constructor<RovingTabIndexClass>;
 
 export const RovingTabIndexMixin = <
-  T extends Constructor<KeyboardDirectionInterface & SlottedItemsInterface & LitElement>
+  T extends Constructor<
+    KeyboardDirectionClass &
+      KeyboardDirectionInterface &
+      SlottedItemsClass &
+      SlottedItemsInterface &
+      RovingTabIndexClass
+  >
 >(
   base: T
 ): T & RovingTabIndexConstructor => {
@@ -29,30 +37,30 @@ export const RovingTabIndexMixin = <
       }
     }
 
-    [$itemsChanged](items: HTMLElement[], oldItems: HTMLElement[]) {
-      super[$itemsChanged](items, oldItems);
+    protected _itemsChanged(items: HTMLElement[], oldItems: HTMLElement[]) {
+      super._itemsChanged && super._itemsChanged(items, oldItems); // eslint-disable-line no-unused-expressions
 
       if (items) {
         const { focused } = this;
-        this[$setFocusable](focused && this.contains(focused) ? items.indexOf(focused as HTMLElement) : 0);
+        this._setFocusable(focused && this.contains(focused) ? items.indexOf(focused as HTMLElement) : 0);
       }
     }
 
-    [$setFocusable](idx: number) {
+    protected _setFocusable(idx: number) {
       const index = getAvailableIndex(this.items, idx, 1, isFocusable);
-      this[$setTabIndex](this.items[index]);
+      this._setTabIndex(this.items[index]);
     }
 
-    [$setTabIndex](item: HTMLElement) {
+    protected _setTabIndex(item: HTMLElement) {
       this.items.forEach((el: HTMLElement) => {
         // eslint-disable-next-line no-param-reassign
         el.tabIndex = el === item ? 0 : -1;
       });
     }
 
-    [$focus](item: HTMLElement) {
-      super[$focus](item);
-      this[$setTabIndex](item);
+    protected _focus(item: HTMLElement) {
+      super._focus && super._focus(item); // eslint-disable-line no-unused-expressions
+      this._setTabIndex(item);
     }
   }
 

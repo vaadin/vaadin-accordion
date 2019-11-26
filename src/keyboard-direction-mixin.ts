@@ -4,21 +4,19 @@ import { SlottedItemsInterface } from './slotted-items-mixin';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Constructor<T = object> = new (...args: any[]) => T;
 
-export const $onKeydown = Symbol('onKeydown');
-
-export const $isPrevKey = Symbol('isPrevKey');
-
-export const $isNextKey = Symbol('isNextKey');
-
-export const $focus = Symbol('focus');
-
 export interface KeyboardDirectionInterface {
   items: HTMLElement[];
   focused: Element | null;
-  [$onKeydown](event: KeyboardEvent): void;
-  [$isPrevKey](key: string): boolean;
-  [$isNextKey](key: string): boolean;
-  [$focus](item: HTMLElement): void;
+}
+
+export abstract class KeyboardDirectionClass extends LitElement {
+  protected _onKeydown?(event: KeyboardEvent): void;
+
+  protected _focus?(item: HTMLElement): void;
+
+  protected _isNextKey?(key: string): boolean;
+
+  protected _isPrevKey?(key: string): boolean;
 }
 
 export type ItemCondition = (item: Element) => boolean;
@@ -26,7 +24,7 @@ export type ItemCondition = (item: Element) => boolean;
 export const isFocusable: ItemCondition = (item: Element) =>
   !item.hasAttribute('disabled') && !item.hasAttribute('hidden');
 
-export type KeyboardDirectionConstructor = Constructor<KeyboardDirectionInterface>;
+export type KeyboardDirectionConstructor = Constructor<KeyboardDirectionClass & KeyboardDirectionInterface>;
 
 /**
  * Returns index of the next item that satisfies the given condition,
@@ -60,7 +58,7 @@ export const getAvailableIndex = (
   return -1;
 };
 
-export const KeyboardDirectionMixin = <T extends Constructor<SlottedItemsInterface & LitElement>>(
+export const KeyboardDirectionMixin = <T extends Constructor<SlottedItemsInterface & KeyboardDirectionClass>>(
   base: T
 ): KeyboardDirectionConstructor & T => {
   class KeyboardDirection extends base {
@@ -81,11 +79,11 @@ export const KeyboardDirectionMixin = <T extends Constructor<SlottedItemsInterfa
       super.firstUpdated(props);
 
       this.addEventListener('keydown', (event: KeyboardEvent) => {
-        this[$onKeydown](event);
+        this._onKeydown(event);
       });
     }
 
-    [$onKeydown](event: KeyboardEvent) {
+    protected _onKeydown(event: KeyboardEvent) {
       if (event.metaKey || event.ctrlKey) {
         return;
       }
@@ -97,10 +95,10 @@ export const KeyboardDirectionMixin = <T extends Constructor<SlottedItemsInterfa
       let idx;
       let increment;
 
-      if (this[$isPrevKey](key)) {
+      if (this._isPrevKey(key)) {
         increment = -1;
         idx = currentIdx - 1;
-      } else if (this[$isNextKey](key)) {
+      } else if (this._isNextKey(key)) {
         increment = 1;
         idx = currentIdx + 1;
       } else if (key === 'Home') {
@@ -116,20 +114,20 @@ export const KeyboardDirectionMixin = <T extends Constructor<SlottedItemsInterfa
         event.preventDefault();
         const item = items[idx] as HTMLElement;
         if (item) {
-          this[$focus](item);
+          this._focus(item);
         }
       }
     }
 
-    [$isPrevKey](key: string) {
+    protected _isPrevKey(key: string) {
       return key === 'ArrowUp' || key === 'ArrowLeft';
     }
 
-    [$isNextKey](key: string) {
+    protected _isNextKey(key: string) {
       return key === 'ArrowDown' || key === 'ArrowRight';
     }
 
-    [$focus](item: HTMLElement) {
+    protected _focus(item: HTMLElement) {
       item.focus();
     }
   }

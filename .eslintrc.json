@@ -4,5 +4,8 @@
     "sourceType": "module",
     "ecmaVersion": 2018,
     "project": "./tsconfig.json"
+  },
+  "rules": {
+    "max-classes-per-file": "off"
   }
 }
