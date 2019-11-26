@@ -1,5 +1,5 @@
 import { LitElement } from 'lit-element';
-import { KeyboardDirectionInterface, getAvailableIndex, isEnabled, $focus } from './keyboard-direction-mixin';
+import { KeyboardDirectionInterface, getAvailableIndex, isFocusable, $focus } from './keyboard-direction-mixin';
 import { $itemsChanged, SlottedItemsInterface } from './slotted-items-mixin';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,7 +39,7 @@ export const RovingTabindexMixin = <
     }
 
     [$setFocusable](idx: number) {
-      const index = getAvailableIndex(this.items, idx, 1, isEnabled);
+      const index = getAvailableIndex(this.items, idx, 1, isFocusable);
       this[$setTabindex](this.items[index] || this.items[0]);
     }
 

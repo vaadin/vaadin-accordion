@@ -135,6 +135,12 @@ describe('RovingTabindexMixin', () => {
     expectTabindex([-1, -1, -1, 0]);
   });
 
+  it('should ignore and skip items with "hidden" attribute when moving tabIndex', () => {
+    element.items[1].setAttribute('hidden', '');
+    arrowDown(element);
+    expectTabindex([-1, -1, -1, 0]);
+  });
+
   it('should not throw when calling focus before element is attached', () => {
     expect(() => {
       document.createElement('rtm-element').focus();

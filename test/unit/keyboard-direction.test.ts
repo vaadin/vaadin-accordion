@@ -127,6 +127,12 @@ describe('KeyboardDirectionMixin', () => {
     expect(element.focused).to.equal(items[3]);
   });
 
+  it('should ignore and skip items with "hidden" attribute when moving focus', () => {
+    element.items[1].setAttribute('hidden', '');
+    arrowDown(element);
+    expect(element.focused).to.equal(items[3]);
+  });
+
   it('should not throw when calling focus before element is attached', () => {
     expect(() => {
       document.createElement('rtm-element').focus();

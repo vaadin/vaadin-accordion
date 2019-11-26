@@ -23,7 +23,8 @@ export interface KeyboardDirectionInterface {
 
 export type ItemCondition = (item: Element) => boolean;
 
-export const isEnabled: ItemCondition = (item: Element) => !item.hasAttribute('disabled');
+export const isFocusable: ItemCondition = (item: Element) =>
+  !item.hasAttribute('disabled') && !item.hasAttribute('hidden');
 
 export type KeyboardDirectionConstructor = Constructor<KeyboardDirectionInterface>;
 
@@ -96,7 +97,7 @@ export const KeyboardDirectionMixin = <T extends Constructor<SlottedItemsInterfa
         idx = items.length - 1;
       }
 
-      idx = getAvailableIndex(items, idx as number, increment as number, isEnabled);
+      idx = getAvailableIndex(items, idx as number, increment as number, isFocusable);
       if (idx >= 0) {
         event.preventDefault();
         const item = items[idx] as HTMLElement;
