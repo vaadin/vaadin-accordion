@@ -86,10 +86,10 @@ export class VaadinAccordion extends KeyboardDirectionMixin(SlottedItemsMixin(Va
   }
 
   [$filterItems]() {
-    return Array.from(this.querySelectorAll(VaadinAccordionPanel.is)) as HTMLElement[];
+    return Array.from(this.querySelectorAll(VaadinAccordionPanel.is)) as VaadinAccordionPanel[];
   }
 
-  [$focus](item: HTMLElement) {
+  [$focus](item: VaadinAccordionPanel) {
     super[$focus](item);
     item.setAttribute('focus-ring', '');
   }
@@ -102,7 +102,7 @@ export class VaadinAccordion extends KeyboardDirectionMixin(SlottedItemsMixin(Va
     return key === 'ArrowUp';
   }
 
-  [$itemsChanged](panels: HTMLElement[], oldPanels: HTMLElement[]) {
+  [$itemsChanged](panels: VaadinAccordionPanel[], oldPanels: VaadinAccordionPanel[]) {
     super[$itemsChanged](panels, oldPanels);
 
     panels
