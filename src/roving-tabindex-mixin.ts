@@ -9,19 +9,19 @@ const $setFocusable = Symbol('setFocusable');
 
 const $setTabindex = Symbol('setTabindex');
 
-export interface RovingTabindexInterface {
+export interface RovingTabIndexInterface {
   [$setFocusable](idx: number): void;
   [$setTabindex](item: HTMLElement): void;
 }
 
-export type RovingTabindexConstructor = Constructor<RovingTabindexInterface>;
+export type RovingTabIndexConstructor = Constructor<RovingTabIndexInterface>;
 
-export const RovingTabindexMixin = <
+export const RovingTabIndexMixin = <
   T extends Constructor<KeyboardDirectionInterface & SlottedItemsInterface & LitElement>
 >(
   base: T
-): T & RovingTabindexConstructor => {
-  class RovingTabindex extends base {
+): T & RovingTabIndexConstructor => {
+  class RovingTabIndex extends base {
     focus() {
       const first = (this.querySelector('[tabindex="0"]') as HTMLElement) || (this.items.length ? this.items[0] : null);
       if (first) {
@@ -56,5 +56,5 @@ export const RovingTabindexMixin = <
     }
   }
 
-  return RovingTabindex;
+  return RovingTabIndex;
 };
