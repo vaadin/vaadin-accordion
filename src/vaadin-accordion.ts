@@ -1,6 +1,6 @@
 import { html, css, customElement, property, PropertyValues } from 'lit-element';
 import { VaadinElement } from '@vaadin/element-base/vaadin-element.js';
-import { KeyboardDirectionMixin, $focus, $isPrev, $isNext, $onKeydown } from './keyboard-direction-mixin';
+import { KeyboardDirectionMixin, $focus, $isPrevKey, $isNextKey, $onKeydown } from './keyboard-direction-mixin';
 import { SlottedItemsMixin, $itemsChanged, $filterItems } from './slotted-items-mixin';
 import { VaadinAccordionPanel } from './vaadin-accordion-panel';
 
@@ -94,11 +94,11 @@ export class VaadinAccordion extends KeyboardDirectionMixin(SlottedItemsMixin(Va
     item.setAttribute('focus-ring', '');
   }
 
-  [$isNext](key: string) {
+  [$isNextKey](key: string) {
     return key === 'ArrowDown';
   }
 
-  [$isPrev](key: string) {
+  [$isPrevKey](key: string) {
     return key === 'ArrowUp';
   }
 

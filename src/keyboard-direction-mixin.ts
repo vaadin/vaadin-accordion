@@ -6,9 +6,9 @@ type Constructor<T = object> = new (...args: any[]) => T;
 
 export const $onKeydown = Symbol('onKeydown');
 
-export const $isPrev = Symbol('isPrev');
+export const $isPrevKey = Symbol('isPrevKey');
 
-export const $isNext = Symbol('isNext');
+export const $isNextKey = Symbol('isNextKey');
 
 export const $focus = Symbol('focus');
 
@@ -16,8 +16,8 @@ export interface KeyboardDirectionInterface {
   items: HTMLElement[];
   focused: Element | null;
   [$onKeydown](event: KeyboardEvent): void;
-  [$isPrev](key: string): boolean;
-  [$isNext](key: string): boolean;
+  [$isPrevKey](key: string): boolean;
+  [$isNextKey](key: string): boolean;
   [$focus](item: HTMLElement): void;
 }
 
@@ -97,10 +97,10 @@ export const KeyboardDirectionMixin = <T extends Constructor<SlottedItemsInterfa
       let idx;
       let increment;
 
-      if (this[$isPrev](key)) {
+      if (this[$isPrevKey](key)) {
         increment = -1;
         idx = currentIdx - 1;
-      } else if (this[$isNext](key)) {
+      } else if (this[$isNextKey](key)) {
         increment = 1;
         idx = currentIdx + 1;
       } else if (key === 'Home') {
@@ -121,11 +121,11 @@ export const KeyboardDirectionMixin = <T extends Constructor<SlottedItemsInterfa
       }
     }
 
-    [$isPrev](key: string) {
+    [$isPrevKey](key: string) {
       return key === 'ArrowUp' || key === 'ArrowLeft';
     }
 
-    [$isNext](key: string) {
+    [$isNextKey](key: string) {
       return key === 'ArrowDown' || key === 'ArrowRight';
     }
 
