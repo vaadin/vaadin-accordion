@@ -124,7 +124,7 @@ describe('RovingTabindexMixin', () => {
     expectTabindex([0, -1, -1, -1]);
   });
 
-  it('should move tabIndex to the last item on "arrow-down" key on the first item', () => {
+  it('should move tabIndex to the last item on "arrow-up" key on the first item', () => {
     arrowUp(element);
     expectTabindex([-1, -1, -1, 0]);
   });

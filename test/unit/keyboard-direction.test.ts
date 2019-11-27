@@ -97,26 +97,26 @@ describe('KeyboardDirectionMixin', () => {
     expect(element.focused).to.equal(items[0]);
   });
 
-  it('should focus next item if the first one is disabled on "home" key', () => {
+  it('should move focus to the first enabled item on "home" key', () => {
     end(element);
     items[0].setAttribute('disabled', '');
     home(element);
     expect(element.focused).to.equal(items[1]);
   });
 
-  it('should focus the most closed enabled item if last is disabled on "end"', () => {
+  it('should move focus to the closest enabled item on "end" key', () => {
     element.items[3].setAttribute('disabled', '');
     end(element);
     expect(element.focused).to.equal(items[1]);
   });
 
-  it('should focus first item on "arrow-down" key pressed on the last item', () => {
+  it('should move focus to the first item on "arrow-down" key on the last item', () => {
     end(element);
     arrowDown(element);
     expect(element.focused).to.equal(items[0]);
   });
 
-  it('should focus last item on "arrow-down" key pressed on the first item', () => {
+  it('should move focus to the last item on "arrow-up" key on the first item', () => {
     arrowUp(element);
     expect(element.focused).to.equal(items[3]);
   });
