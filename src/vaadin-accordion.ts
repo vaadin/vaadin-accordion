@@ -132,7 +132,7 @@ export class VaadinAccordion extends KeyboardDirectionMixin(SlottedItemsMixin(Va
 
   private _updatePanels(panels: VaadinAccordionPanel[], opened?: number | null) {
     if (panels) {
-      const panelToOpen = opened == undefined ? null : panels[opened]; // eslint-disable-line eqeqeq
+      const panelToOpen = opened == null ? null : panels[opened];
       panels.forEach(panel => {
         panel.opened = panel === panelToOpen; // eslint-disable-line no-param-reassign
       });
