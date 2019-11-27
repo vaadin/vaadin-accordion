@@ -7,11 +7,11 @@ type Constructor<T = object> = new (...args: any[]) => T;
 
 const $setFocusable = Symbol('setFocusable');
 
-const $setTabindex = Symbol('setTabindex');
+const $setTabIndex = Symbol('setTabIndex');
 
 export interface RovingTabIndexInterface {
   [$setFocusable](idx: number): void;
-  [$setTabindex](item: HTMLElement): void;
+  [$setTabIndex](item: HTMLElement): void;
 }
 
 export type RovingTabIndexConstructor = Constructor<RovingTabIndexInterface>;
@@ -40,10 +40,10 @@ export const RovingTabIndexMixin = <
 
     [$setFocusable](idx: number) {
       const index = getAvailableIndex(this.items, idx, 1, isFocusable);
-      this[$setTabindex](this.items[index] || this.items[0]);
+      this[$setTabIndex](this.items[index]);
     }
 
-    [$setTabindex](item: HTMLElement) {
+    [$setTabIndex](item: HTMLElement) {
       this.items.forEach((el: HTMLElement) => {
         // eslint-disable-next-line no-param-reassign
         el.tabIndex = el === item ? 0 : -1;
@@ -52,7 +52,7 @@ export const RovingTabIndexMixin = <
 
     [$focus](item: HTMLElement) {
       super[$focus](item);
-      this[$setTabindex](item);
+      this[$setTabIndex](item);
     }
   }
 
