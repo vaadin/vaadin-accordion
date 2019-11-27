@@ -40,8 +40,8 @@ describe('RovingTabIndexMixin', () => {
   let element: RtmElement;
   let items: HTMLElement[];
 
-  const expectTabIndex = (order: number[]) => {
-    order.forEach((val, idx) => expect(items[idx].tabIndex).to.be.equal(val));
+  const expectTabIndexZero = (idx: number) => {
+    element.items.forEach((item, i) => expect(item.tabIndex).to.be.equal(i === idx ? 0 : -1));
   };
 
   beforeEach(async () => {
@@ -59,86 +59,86 @@ describe('RovingTabIndexMixin', () => {
   });
 
   it('should set tabIndex to -1 to all items, except the first one', () => {
-    expectTabIndex([0, -1, -1, -1]);
+    expectTabIndexZero(0);
   });
 
   it('should not move tabIndex when "ctrl" is pressed on "arrow-down" key', () => {
     arrowDown(element, 'ctrl');
-    expectTabIndex([0, -1, -1, -1]);
+    expectTabIndexZero(0);
   });
 
   it('should not move tabIndex when "meta" is pressed on "arrow-down" key', () => {
     arrowDown(element, 'meta');
-    expectTabIndex([0, -1, -1, -1]);
+    expectTabIndexZero(0);
   });
 
   it('should move tabIndex to next item on "arrow-down" key', () => {
     arrowDown(element);
-    expectTabIndex([-1, 0, -1, -1]);
+    expectTabIndexZero(1);
   });
 
   it('should move tabIndex to next item on "arrow-right" key', () => {
     arrowRight(element);
-    expectTabIndex([-1, 0, -1, -1]);
+    expectTabIndexZero(1);
   });
 
   it('should move tabIndex to prev item on "arrow-up" key', () => {
     arrowDown(element);
     arrowUp(element);
-    expectTabIndex([0, -1, -1, -1]);
+    expectTabIndexZero(0);
   });
 
   it('should move tabIndex to prev item on "arrow-left" key', () => {
     arrowRight(element);
     arrowLeft(element);
-    expectTabIndex([0, -1, -1, -1]);
+    expectTabIndexZero(0);
   });
 
   it('should move tabIndex to last item on "end" keydown', () => {
     end(element);
-    expectTabIndex([-1, -1, -1, 0]);
+    expectTabIndexZero(3);
   });
 
   it('should move tabIndex to the first item on "home" key', () => {
     end(element);
     home(element);
-    expectTabIndex([0, -1, -1, -1]);
+    expectTabIndexZero(0);
   });
 
   it('should move tabIndex to the first enabled item on "home" key', () => {
     end(element);
     items[0].setAttribute('disabled', '');
     home(element);
-    expectTabIndex([-1, 0, -1, -1]);
+    expectTabIndexZero(1);
   });
 
   it('should move tabIndex to the closest enabled item on "end" key', () => {
     element.items[3].setAttribute('disabled', '');
     end(element);
-    expectTabIndex([-1, 0, -1, -1]);
+    expectTabIndexZero(1);
   });
 
   it('should move tabIndex to the first item on "arrow-down" key on the last item', () => {
     end(element);
     arrowDown(element);
-    expectTabIndex([0, -1, -1, -1]);
+    expectTabIndexZero(0);
   });
 
   it('should move tabIndex to the last item on "arrow-up" key on the first item', () => {
     arrowUp(element);
-    expectTabIndex([-1, -1, -1, 0]);
+    expectTabIndexZero(3);
   });
 
   it('should ignore and skip items with "disabled" attribute when moving tabIndex', () => {
     arrowDown(element);
     arrowDown(element);
-    expectTabIndex([-1, -1, -1, 0]);
+    expectTabIndexZero(3);
   });
 
   it('should ignore and skip items with "hidden" attribute when moving tabIndex', () => {
     element.items[1].setAttribute('hidden', '');
     arrowDown(element);
-    expectTabIndex([-1, -1, -1, 0]);
+    expectTabIndexZero(3);
   });
 
   it('should not throw when calling focus before element is attached', () => {
@@ -154,7 +154,7 @@ describe('RovingTabIndexMixin', () => {
     element.focus();
     await element.updateComplete;
     expect(spy).to.be.calledOnce;
-    expectTabIndex([-1, 0, -1, -1]);
+    expectTabIndexZero(1);
   });
 
   it('should set tabIndex to -1 on the newly added item', async () => {
