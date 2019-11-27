@@ -24,8 +24,12 @@ describe('SlottedItemsMixin', () => {
   beforeEach(async () => {
     element = await fixture(html`
       <sim-element>
-        <div>Item 1</div>
-        <div>Item 2</div>
+        <div>
+          <span>Item 1</span>
+        </div>
+        <div>
+          <span>Item 2</span>
+        </div>
         <div>Item 3</div>
       </sim-element>
     `);
