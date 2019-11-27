@@ -28,7 +28,21 @@ export const isFocusable: ItemCondition = (item: Element) =>
 
 export type KeyboardDirectionConstructor = Constructor<KeyboardDirectionInterface>;
 
-export const getAvailableIndex = (items: Element[], index: number, increment: number, condition: ItemCondition) => {
+/**
+ * Returns index of the next item that satisfies the given condition,
+ * based on the index of the current item and a numeric increment.
+ *
+ * @param {Element[]} items - array of items to iterate over
+ * @param {number} index - index of the current item
+ * @param {number} increment - numeric increment, can be either 1 or -1
+ * @param {ItemCondition} condition - function that accepts item as a parameter
+ */
+export const getAvailableIndex = (
+  items: Element[],
+  index: number,
+  increment: number,
+  condition: ItemCondition
+): number => {
   const totalItems = items.length;
   let idx = index;
   for (let i = 0; typeof idx === 'number' && i < totalItems; i += 1, idx += increment || 1) {
