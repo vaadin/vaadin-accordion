@@ -60,7 +60,7 @@ export const SlottedItemsMixin = <T extends Constructor<LitElement>>(base: T): S
     }
 
     [$filterItems]() {
-      return Array.from(this.querySelectorAll('*')) as HTMLElement[];
+      return Array.from(this.children) as HTMLElement[];
     }
   }
 
