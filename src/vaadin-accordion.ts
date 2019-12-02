@@ -90,7 +90,7 @@ export class VaadinAccordion extends KeyboardDirectionMixin(SlottedItemsMixin(Va
   }
 
   protected _focus(item: VaadinAccordionPanel) {
-    super._focus && super._focus(item); // eslint-disable-line no-unused-expressions
+    super._focus!(item); // @typescript-eslint/no-non-null-assertion
     item.setAttribute('focus-ring', '');
   }
 
@@ -103,7 +103,7 @@ export class VaadinAccordion extends KeyboardDirectionMixin(SlottedItemsMixin(Va
   }
 
   protected _itemsChanged(panels: VaadinAccordionPanel[], oldPanels: VaadinAccordionPanel[]) {
-    super._itemsChanged && super._itemsChanged(panels, oldPanels); // eslint-disable-line no-unused-expressions
+    super._itemsChanged!(panels, oldPanels); // @typescript-eslint/no-non-null-assertion
 
     panels
       .filter(panel => !oldPanels.includes(panel))
@@ -121,8 +121,8 @@ export class VaadinAccordion extends KeyboardDirectionMixin(SlottedItemsMixin(Va
   protected _onKeyDown(event: KeyboardEvent) {
     // only check keyboard events on summary, not on the content
     const summary = event.composedPath()[0] as HTMLElement;
-    if (summary && summary.getAttribute('part') === 'summary' && super._onKeyDown) {
-      super._onKeyDown(event);
+    if (summary && summary.getAttribute('part') === 'summary') {
+      super._onKeyDown!(event); // @typescript-eslint/no-non-null-assertion
     }
   }
 
