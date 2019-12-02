@@ -2,13 +2,46 @@
 
 <html>
   <head>
-    <title>vaadin-accordion</title>
+    <title>&lt;vaadin-accordion&gt;</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="../iron-component-page/iron-component-page.html">
+    <style>
+      body {
+        margin: 0;
+      }
+
+      api-viewer {
+        margin: 1rem auto 0;
+      }
+
+      @media(max-width: 799px) {
+        api-viewer {
+          margin: 0;
+        }
+      }
+    </style>
   </head>
   <body>
-    <iron-component-page src="vaadin-accordion.html"></iron-component-page>
+    <api-viewer src="custom-elements.json">
+      <template data-element="vaadin-accordion">
+        <vaadin-accordion-panel>
+          <div slot="summary">Panel 1</div>
+          <div>Content 1</div>
+        </vaadin-accordion-panel>
+        <vaadin-accordion-panel disabled>
+          <div slot="summary">Panel 2</div>
+          <div>Content 2</div>
+        </vaadin-accordion-panel>
+        <vaadin-accordion-panel>
+          <div slot="summary">Panel 3</div>
+          <div>Content 3</div>
+        </vaadin-accordion-panel>
+      </template>
+    </api-viewer>
+
+    <script type="module" src="./vaadin-accordion.ts"></script>
+    <script type="module">
+      import 'api-viewer-element';
+    </script>
   </body>
 </html>
