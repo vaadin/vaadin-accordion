@@ -1,7 +1,7 @@
 import { html, css, customElement, property, PropertyValues } from 'lit-element';
 import { VaadinElement } from '@vaadin/element-base/vaadin-element.js';
-import { KeyboardDirectionMixin, $focus, $isPrevKey, $isNextKey, $onKeydown } from './keyboard-direction-mixin';
-import { SlottedItemsMixin, $itemsChanged, $filterItems } from './slotted-items-mixin';
+import { KeyboardDirectionMixin } from '@vaadin/keyboard-direction-mixin';
+import { SlottedItemsMixin } from '@vaadin/slotted-items-mixin';
 import { VaadinAccordionPanel } from './vaadin-accordion-panel';
 
 declare global {
@@ -85,25 +85,25 @@ export class VaadinAccordion extends KeyboardDirectionMixin(SlottedItemsMixin(Va
     }
   }
 
-  [$filterItems]() {
+  protected _filterItems() {
     return Array.from(this.querySelectorAll(VaadinAccordionPanel.is)) as VaadinAccordionPanel[];
   }
 
-  [$focus](item: VaadinAccordionPanel) {
-    super[$focus](item);
+  protected _focus(item: VaadinAccordionPanel) {
+    super._focus && super._focus(item); // eslint-disable-line no-unused-expressions
     item.setAttribute('focus-ring', '');
   }
 
-  [$isNextKey](key: string) {
+  protected _isNextKey(key: string) {
     return key === 'ArrowDown';
   }
 
-  [$isPrevKey](key: string) {
+  protected _isPrevKey(key: string) {
     return key === 'ArrowUp';
   }
 
-  [$itemsChanged](panels: VaadinAccordionPanel[], oldPanels: VaadinAccordionPanel[]) {
-    super[$itemsChanged](panels, oldPanels);
+  protected _itemsChanged(panels: VaadinAccordionPanel[], oldPanels: VaadinAccordionPanel[]) {
+    super._itemsChanged && super._itemsChanged(panels, oldPanels); // eslint-disable-line no-unused-expressions
 
     panels
       .filter(panel => !oldPanels.includes(panel))
@@ -118,11 +118,11 @@ export class VaadinAccordion extends KeyboardDirectionMixin(SlottedItemsMixin(Va
       });
   }
 
-  [$onKeydown](event: KeyboardEvent) {
+  protected _onKeyDown(event: KeyboardEvent) {
     // only check keyboard events on summary, not on the content
     const summary = event.composedPath()[0] as HTMLElement;
-    if (summary && summary.getAttribute('part') === 'summary') {
-      super[$onKeydown](event);
+    if (summary && summary.getAttribute('part') === 'summary' && super._onKeyDown) {
+      super._onKeyDown(event);
     }
   }
 
