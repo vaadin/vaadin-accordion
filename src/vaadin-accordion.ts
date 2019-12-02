@@ -35,7 +35,7 @@ export class VaadinAccordion extends KeyboardDirectionMixin(SlottedItemsMixin(Va
   static is = 'vaadin-accordion';
 
   static get version() {
-    return '1.0.1';
+    return '2.0.0-alpha1';
   }
 
   /**
