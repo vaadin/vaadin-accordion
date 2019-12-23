@@ -89,11 +89,6 @@ export class VaadinAccordion extends KeyboardDirectionMixin(SlottedItemsMixin(Va
     return Array.from(this.querySelectorAll(VaadinAccordionPanel.is)) as VaadinAccordionPanel[];
   }
 
-  protected _focus(item: VaadinAccordionPanel) {
-    super._focus && super._focus(item); // eslint-disable-line no-unused-expressions
-    item.setAttribute('focus-ring', '');
-  }
-
   protected _isNextKey(key: string) {
     return key === 'ArrowDown';
   }
