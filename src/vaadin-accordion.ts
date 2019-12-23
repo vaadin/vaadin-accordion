@@ -65,8 +65,16 @@ export class VaadinAccordion extends KeyboardDirectionMixin(SlottedItemsMixin(Va
     `;
   }
 
-  get items(): VaadinAccordionPanel[] {
-    return super.items as VaadinAccordionPanel[];
+  /**
+   * The list of `<vaadin-accordion-panel>` child elements.
+   * It is populated from the elements passed to the light DOM,
+   * and updated dynamically when adding or removing panels.
+   *
+   * @type {Array<VaadinAccordionPanel>}
+   * @readonly
+   */
+  get items(): Array<VaadinAccordionPanel> {
+    return super.items as Array<VaadinAccordionPanel>;
   }
 
   protected updated(props: PropertyValues) {
