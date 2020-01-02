@@ -106,7 +106,7 @@ export class VaadinAccordion extends KeyboardDirectionMixin(SlottedItemsMixin(Va
   }
 
   protected _itemsChanged(panels: VaadinAccordionPanel[], oldPanels: VaadinAccordionPanel[]) {
-    super._itemsChanged && super._itemsChanged(panels, oldPanels); // eslint-disable-line no-unused-expressions
+    super._itemsChanged && super._itemsChanged(panels, oldPanels);
 
     panels
       .filter(panel => !oldPanels.includes(panel))
