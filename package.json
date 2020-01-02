@@ -73,6 +73,6 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@vaadin/vaadin-component-dev-dependencies": "^4.4.0"
+    "@vaadin/vaadin-component-dev-dependencies": "^4.5.0"
   }
 }
