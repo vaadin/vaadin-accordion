@@ -9,7 +9,7 @@
 
 [&lt;vaadin-accordion&gt;](https://vaadin.com/components/vaadin-accordion) is a Web Component providing accordion functionality, part of the [Vaadin components](https://vaadin.com/components).
 
-[<img src="https://raw.githubusercontent.com/vaadin/vaadin-accordion/master/screenshot.png" width="200" alt="Screenshot of vaadin-accordion">](https://vaadin.com/components/vaadin-accordion)
+[<img src="https://raw.githubusercontent.com/vaadin/vaadin-accordion/master/screenshot.png" alt="Screenshot of vaadin-accordion" width="900">](https://vaadin.com/components/vaadin-accordion)
 
 ## Example Usage
 
