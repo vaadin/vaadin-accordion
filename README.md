@@ -14,6 +14,12 @@
 [![Published on Vaadin Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/vaadinvaadin-accordion)
 [![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/vaadin-accordion-directory-urlidentifier.svg)](https://vaadin.com/directory/component/vaadinvaadin-accordion)
 
+> ⚠️ This is a pre-release version built with [`LitElement`](https://github.com/Polymer/lit-element), part of the [next generation of Vaadin web components](https://vaadin.com/blog/next-generation-vaadin-components).
+>
+> Looking for Vaadin 14 compatible version? Please see the following branches:
+> - [1.0 branch](https://github.com/vaadin/vaadin-accordion/tree/1.0)
+> - [1.1 branch](https://github.com/vaadin/vaadin-accordion/tree/1.1)
+
 ```html
 <vaadin-accordion>
   <vaadin-accordion-panel theme="filled">
