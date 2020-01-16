@@ -16,8 +16,8 @@
 > ⚠️ This is a pre-release version built with [`LitElement`](https://github.com/Polymer/lit-element), part of the [next generation of Vaadin web components](https://vaadin.com/blog/next-generation-vaadin-components).
 >
 > Looking for Vaadin 14 compatible version? Please see the following branches:
-> - [1.0 branch](https://github.com/vaadin/vaadin-accordion/tree/1.0)
-> - [1.1 branch](https://github.com/vaadin/vaadin-accordion/tree/1.1)
+> - [1.0 branch](https://github.com/vaadin/vaadin-accordion/tree/1.0) (latest stable)
+> - [1.1 branch](https://github.com/vaadin/vaadin-accordion/tree/1.1) (next minor version with incremental improvements)
 
 ```html
 <vaadin-accordion>
