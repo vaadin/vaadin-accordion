@@ -97,12 +97,8 @@ export class VaadinAccordion extends KeyboardDirectionMixin(SlottedItemsMixin(Va
     return Array.from(this.querySelectorAll(VaadinAccordionPanel.is)) as VaadinAccordionPanel[];
   }
 
-  protected _isNextKey(key: string) {
-    return key === 'ArrowDown';
-  }
-
-  protected _isPrevKey(key: string) {
-    return key === 'ArrowUp';
+  protected get _vertical() {
+    return true;
   }
 
   protected _itemsChanged(panels: VaadinAccordionPanel[], oldPanels: VaadinAccordionPanel[]) {
