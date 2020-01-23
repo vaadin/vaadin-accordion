@@ -23,6 +23,16 @@ describe('accordion', () => {
         <vaadin-accordion-panel>
           <div slot="summary">Panel 3</div>
           Content 3
+          <vaadin-accordion>
+            <vaadin-accordion-panel>
+              <div slot="summary">Child Panel 1</div>
+              Child Content 1
+            </vaadin-accordion-panel>
+            <vaadin-accordion-panel>
+              <div slot="summary">Child Panel 2</div>
+              Child Content 2
+            </vaadin-accordion-panel>
+          </vaadin-accordion>
         </vaadin-accordion-panel>
       </vaadin-accordion>
     `);
@@ -52,6 +62,12 @@ describe('accordion', () => {
 
     it('should have a valid version number', () => {
       expect(customElements.get(tagName).version).to.match(/^(\d+\.)?(\d+\.)?(\d+)(-(alpha|beta)\d+)?$/);
+    });
+  });
+
+  describe('items', () => {
+    it('should only include direct child panels to items', () => {
+      expect(accordion.items.length).to.equal(3);
     });
   });
 
