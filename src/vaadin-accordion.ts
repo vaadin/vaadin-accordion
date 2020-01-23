@@ -94,7 +94,9 @@ export class VaadinAccordion extends KeyboardDirectionMixin(SlottedItemsMixin(Va
   }
 
   protected _filterItems() {
-    return Array.from(this.querySelectorAll(VaadinAccordionPanel.is)) as VaadinAccordionPanel[];
+    return Array.from(this.children).filter(
+      (node): node is VaadinAccordionPanel => node instanceof VaadinAccordionPanel
+    );
   }
 
   protected get _vertical() {
