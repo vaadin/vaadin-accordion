@@ -61,8 +61,8 @@
   },
   "dependencies": {
     "@vaadin/element-base": "^0.2.0",
-    "@vaadin/keyboard-direction-mixin": "^0.1.3",
-    "@vaadin/slotted-items-mixin": "^0.1.2",
+    "@vaadin/keyboard-direction-mixin": "^0.1.4",
+    "@vaadin/slotted-items-mixin": "^0.1.3",
     "@vaadin/themable-element": "^0.1.2",
     "@vaadin/vaadin-lumo-styles": "^1.6.0",
     "@vaadin/vaadin-material-styles": "^1.3.2",
@@ -73,6 +73,6 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@vaadin/vaadin-component-dev-dependencies": "^4.6.0"
+    "@vaadin/vaadin-component-dev-dependencies": "^4.7.0"
   }
 }
