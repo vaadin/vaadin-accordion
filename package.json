@@ -1,6 +1,6 @@
 {
   "name": "@vaadin/vaadin-accordion",
-  "version": "2.0.0-alpha2",
+  "version": "2.0.0-alpha3",
   "description": "vaadin-accordion",
   "main": "vaadin-accordion.js",
   "module": "vaadin-accordion.js",
