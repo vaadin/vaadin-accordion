@@ -37,7 +37,7 @@ describe('accordion', () => {
       </vaadin-accordion>
     `);
 
-    items = accordion.items;
+    items = accordion.items as VaadinAccordionPanel[];
   });
 
   function getSummary(idx: number) {
@@ -135,7 +135,7 @@ describe('accordion', () => {
     });
 
     it('should not change opened state if panel has been removed', async () => {
-      const panel = accordion.items[1];
+      const panel = accordion.items[1] as VaadinAccordionPanel;
       accordion.removeChild(panel);
       await nextFrame();
       panel.opened = true;

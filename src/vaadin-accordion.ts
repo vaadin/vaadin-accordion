@@ -1,14 +1,6 @@
-import { html, css, customElement, property, PropertyValues } from 'lit-element';
-import { VaadinElement } from '@vaadin/element-base/vaadin-element.js';
-import { KeyboardDirectionMixin } from '@vaadin/keyboard-direction-mixin';
-import { SlottedItemsMixin } from '@vaadin/slotted-items-mixin';
-import { VaadinAccordionPanel } from './vaadin-accordion-panel';
-
-declare global {
-  interface HTMLElementEventMap {
-    'opened-changed': CustomEvent;
-  }
-}
+import { customElement } from 'lit-element';
+import { AccordionBase } from './vaadin-accordion-base';
+import { AccordionMixin } from './vaadin-accordion-mixin';
 
 /**
  * `<vaadin-accordion>` is a Web Component component implementing the accordion widget: a vertically
@@ -31,130 +23,11 @@ declare global {
  * @fires opened-changed - Fired when the `opened` property changes.
  */
 @customElement('vaadin-accordion')
-export class VaadinAccordion extends KeyboardDirectionMixin(SlottedItemsMixin(VaadinElement)) {
+export class VaadinAccordion extends AccordionMixin(AccordionBase) {
   static is = 'vaadin-accordion';
 
   static get version() {
     return '2.0.0-alpha3';
-  }
-
-  /**
-   * Index of the currently opened panel. First panel is opened by
-   * default. Only one panel can be opened at the same time.
-   * Setting `null` or `undefined` closes all the accordion panels.
-   */
-  @property({ type: Number }) opened?: number | null = 0;
-
-  protected _boundOpenedChanged = this._onOpenedChanged.bind(this) as EventListener;
-
-  static get styles() {
-    return css`
-      :host {
-        display: block;
-      }
-
-      :host([hidden]) {
-        display: none !important;
-      }
-    `;
-  }
-
-  protected render() {
-    return html`
-      <slot></slot>
-    `;
-  }
-
-  /**
-   * The list of `<vaadin-accordion-panel>` child elements.
-   * It is populated from the elements passed to the light DOM,
-   * and updated dynamically when adding or removing panels.
-   *
-   * @type {Array<VaadinAccordionPanel>}
-   * @readonly
-   */
-  get items(): Array<VaadinAccordionPanel> {
-    return super.items as Array<VaadinAccordionPanel>;
-  }
-
-  protected updated(props: PropertyValues) {
-    super.updated(props);
-
-    if (props.has('opened') || props.has('_items')) {
-      this._updatePanels(this.items, this.opened);
-    }
-
-    if (props.has('opened')) {
-      this.dispatchEvent(
-        new CustomEvent('opened-changed', {
-          detail: { value: this.opened }
-        })
-      );
-    }
-  }
-
-  protected _filterItems() {
-    return Array.from(this.children).filter(
-      (node): node is VaadinAccordionPanel => node instanceof VaadinAccordionPanel
-    );
-  }
-
-  protected get _vertical() {
-    return true;
-  }
-
-  protected _itemsChanged(panels: VaadinAccordionPanel[], oldPanels: VaadinAccordionPanel[]) {
-    super._itemsChanged && super._itemsChanged(panels, oldPanels);
-
-    panels
-      .filter(panel => !oldPanels.includes(panel))
-      .forEach(panel => {
-        panel.addEventListener('opened-changed', this._boundOpenedChanged);
-      });
-
-    oldPanels
-      .filter(panel => !panels.includes(panel))
-      .forEach(panel => {
-        panel.removeEventListener('opened-changed', this._boundOpenedChanged);
-      });
-  }
-
-  protected _onKeyDown(event: KeyboardEvent) {
-    // only check keyboard events on summary, not on the content
-    const summary = event.composedPath()[0] as HTMLElement;
-    if (summary && summary.getAttribute('part') === 'summary' && super._onKeyDown) {
-      super._onKeyDown(event);
-    }
-  }
-
-  private _onOpenedChanged(event: CustomEvent) {
-    this._updateOpened(event);
-  }
-
-  private _updatePanels(panels: VaadinAccordionPanel[], opened?: number | null) {
-    if (panels) {
-      const panelToOpen = opened == null ? null : panels[opened];
-      panels.forEach(panel => {
-        panel.opened = panel === panelToOpen; // eslint-disable-line no-param-reassign
-      });
-    }
-  }
-
-  private _updateOpened(event: CustomEvent) {
-    const target = event.composedPath()[0] as VaadinAccordionPanel;
-    const panels = this.items;
-    const idx = panels.indexOf(target);
-    if (event.detail.value) {
-      this.opened = idx;
-
-      panels.forEach(panel => {
-        if (panel !== target && panel.opened) {
-          panel.opened = false; // eslint-disable-line no-param-reassign
-        }
-      });
-    } else if (!panels.some(panel => panel.opened)) {
-      this.opened = null;
-    }
   }
 }
 
