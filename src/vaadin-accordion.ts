@@ -28,7 +28,7 @@ export class VaadinAccordion extends AccordionMixin(AccordionBase) {
   static is = 'vaadin-accordion';
 
   static get version() {
-    return '2.0.0-alpha3';
+    return '2.0.0-alpha4';
   }
 }
 
