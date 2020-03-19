@@ -1,4 +1,8 @@
-import { DetailsBase } from '@vaadin/vaadin-details/src/vaadin-details-base.js';
-import { DetailsStateMixin } from '@vaadin/vaadin-details/src/vaadin-details-state-mixin.js';
+import { VaadinElement } from '@vaadin/element-base/vaadin-element.js';
+import { detailsStyles } from '@vaadin/vaadin-details/src/vaadin-details-css.js';
 
-export class VaadinAccordionPanelBase extends DetailsStateMixin(DetailsBase) {}
+export class AccordionPanelBase extends VaadinElement {
+  static get styles() {
+    return detailsStyles;
+  }
+}
