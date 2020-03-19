@@ -1,6 +1,7 @@
 import { customElement } from 'lit-element';
 import { AccordionBase } from './vaadin-accordion-base';
 import { AccordionMixin } from './vaadin-accordion-mixin';
+import './vaadin-accordion-panel';
 
 /**
  * `<vaadin-accordion>` is a Web Component component implementing the accordion widget: a vertically

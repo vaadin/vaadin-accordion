@@ -3,7 +3,8 @@ import { Constructor } from '@vaadin/mixin-utils';
 import { KeyboardDirectionMixin } from '@vaadin/keyboard-direction-mixin';
 import { KeyboardClass } from '@vaadin/keyboard-mixin/keyboard-class';
 import { SlottedItemsMixin, SlottedItemsInterface } from '@vaadin/slotted-items-mixin';
-import { VaadinAccordionPanel } from './vaadin-accordion-panel';
+import { DetailsMixinClass } from '@vaadin/vaadin-details/src/vaadin-details-mixin-class.js';
+import { Details } from '@vaadin/vaadin-details/src/vaadin-details-mixin.js';
 
 declare global {
   interface HTMLElementEventMap {
@@ -32,7 +33,7 @@ export const AccordionMixin = <T extends Constructor<LitElement & KeyboardClass>
       super.updated(props);
 
       if (props.has('opened') || props.has('items')) {
-        this._updatePanels(this.items as VaadinAccordionPanel[], this.opened);
+        this._updatePanels(this.items as Details[], this.opened);
       }
 
       if (props.has('opened')) {
@@ -46,15 +47,15 @@ export const AccordionMixin = <T extends Constructor<LitElement & KeyboardClass>
 
     protected _filterItems() {
       return Array.from(this.children).filter(
-        (node): node is VaadinAccordionPanel => node instanceof VaadinAccordionPanel
-      );
+        node => node.nodeType === Node.ELEMENT_NODE && (node.constructor as typeof DetailsMixinClass).hasDetailsMixin
+      ) as HTMLElement[];
     }
 
     protected get _vertical() {
       return true;
     }
 
-    protected _itemsChanged(panels: VaadinAccordionPanel[], oldPanels: VaadinAccordionPanel[]) {
+    protected _itemsChanged(panels: Details[], oldPanels: Details[]) {
       super._itemsChanged && super._itemsChanged(panels, oldPanels);
 
       panels
@@ -82,7 +83,7 @@ export const AccordionMixin = <T extends Constructor<LitElement & KeyboardClass>
       this._updateOpened(event);
     }
 
-    private _updatePanels(panels: VaadinAccordionPanel[], opened?: number | null) {
+    private _updatePanels(panels: Details[], opened?: number | null) {
       if (panels) {
         const panelToOpen = opened == null ? null : panels[opened];
         panels.forEach(panel => {
@@ -92,19 +93,19 @@ export const AccordionMixin = <T extends Constructor<LitElement & KeyboardClass>
     }
 
     private _updateOpened(event: CustomEvent) {
-      const target = event.composedPath()[0] as VaadinAccordionPanel;
+      const target = event.composedPath()[0] as Details;
       const panels = this.items;
       const idx = panels.indexOf(target);
       if (event.detail.value) {
         this.opened = idx;
 
         panels.forEach((item: HTMLElement) => {
-          const panel = item as VaadinAccordionPanel;
+          const panel = item as Details;
           if (panel !== target && panel.opened) {
             panel.opened = false; // eslint-disable-line no-param-reassign
           }
         });
-      } else if (!panels.some((panel: HTMLElement) => (panel as VaadinAccordionPanel).opened)) {
+      } else if (!panels.some((panel: HTMLElement) => (panel as Details).opened)) {
         this.opened = null;
       }
     }
