@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
+<html lang="en">
+<head>
   <meta charset="UTF-8">
   <title></title>
+  <script>
+    window.polymerSkipLoadingFontRoboto = true;
+  </script>
 </head>
 
 <body>
@@ -33,8 +36,17 @@
   </span>
 
   <script type="module">
-    const theme = location.search.replace(/.*theme=(\w+).*/, '$1') || 'lumo';
-    import('../../theme/' + theme + '/vaadin-accordion.js');
+    (async() => {
+      const theme = window.location.search.replace(/.*theme=(\w+).*/, '$1') || 'lumo';
+
+      await import('../../theme/' + theme + '/vaadin-accordion.js');
+
+      await document.querySelector('vaadin-accordion').updateComplete;
+
+      window.requestAnimationFrame(() => {
+        document.getElementById('accordion-tests').dataset.ready = true;
+      });
+    })();
   </script>
 </body>
 </html>

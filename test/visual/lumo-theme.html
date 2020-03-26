@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
+<html lang="en">
+<head>
   <meta charset="UTF-8">
   <title></title>
 </head>
@@ -34,6 +34,14 @@
 
   <script type="module">
     import '../../theme/lumo/vaadin-accordion.js';
+
+    (async() => {
+      await document.querySelector('vaadin-accordion').updateComplete;
+
+      window.requestAnimationFrame(() => {
+        document.getElementById('accordion-tests').dataset.ready = true;
+      });
+    })();
   </script>
 </body>
 </html>

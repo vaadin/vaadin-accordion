@@ -1,23 +1,19 @@
-gemini.suite('vaadin-accordion', function(rootSuite) {
-  function wait(actions) {
-    actions.wait(7000);
-  }
+describe('vaadin-accordion', () => {
+  const locator = '#accordion-tests[data-ready]';
 
-  rootSuite
-    .before(wait);
   ['lumo', 'material'].forEach(theme => {
-    gemini.suite(`accordion-${theme}`, suite => {
-      suite
-        .setUrl(`accordion.html?theme=${theme}`)
-        .setCaptureElements('#accordion-tests')
-        .capture(`vaadin-accordion`);
+    it(`${theme}-default`, function() {
+      return this.browser
+        .url(`accordion.html?theme=${theme}`)
+        .waitForVisible(locator, 10000)
+        .assertView(`${theme}-default`, locator);
     });
 
-    gemini.suite(`${theme}-theme`, suite => {
-      suite
-        .setUrl(`${theme}-theme.html`)
-        .setCaptureElements('#accordion-tests')
-        .capture(`vaadin-accordion`);
+    it(`${theme}-theme`, function() {
+      return this.browser
+        .url(`${theme}-theme.html`)
+        .waitForVisible(locator, 10000)
+        .assertView(`${theme}-theme`, locator);
     });
   });
 });

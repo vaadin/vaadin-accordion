@@ -43,7 +43,6 @@
     "build": "tsc && replace-in-file \"/(import|from)( '[.]+/)(.*)(?<!.js)(';)/g\" \"\\$1\\$2\\$3.js\\$4\" vaadin-*.{js,d.ts},src/*.{js,d.ts},theme/**/*.{js,d.ts} --isRegex --verbose",
     "dist": "rimraf dist && npm run analyze && npm run build && rollup -c rollup.config.js && cp custom-elements.json dist",
     "check:version": "magi check-version",
-    "gemini": "gemini update test/visual",
     "lint": "npm-run-all --parallel lint:*",
     "lint:css": "stylelint src/*.ts theme/**/*.ts test/*.ts",
     "lint:js": "eslint src theme test --ext .ts --ignore-path .gitignore",
@@ -51,12 +50,13 @@
     "prepublishOnly": "npm run build",
     "prestart": "npm run analyze",
     "preversion": "magi update-version",
+    "screenshots": "hermione test/visual/test.js --update-refs",
     "serve:dist": "es-dev-server --app-index dist/index.html --open",
     "start": "es-dev-server --file-extensions .ts --node-resolve --babel --watch --port 3000 --open",
     "test": "karma start",
     "test:debug": "karma start --single-run false --browsers Chrome",
     "test:sauce": "cross-env TEST_PLATFORM=sauce karma start",
-    "test:visual": "npm run build && gemini test test/visual"
+    "test:visual": "npm run build && hermione test/visual/test.js"
   },
   "dependencies": {
     "@vaadin/element-base": "^0.3.0",
@@ -74,6 +74,6 @@
     "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@vaadin/vaadin-component-dev-dependencies": "^4.9.0"
+    "@vaadin/vaadin-component-dev-dependencies": "vaadin/vaadin-component-dev-dependencies#hermione"
   }
 }
