@@ -1,14 +1,8 @@
-import {PolymerElement} from '@polymer/polymer/polymer-element.js';
-
-import {FlattenedNodesObserver} from '@polymer/polymer/lib/utils/flattened-nodes-observer.js';
-
 import {ElementMixin} from '@vaadin/vaadin-element-mixin/vaadin-element-mixin.js';
 
 import {ThemableMixin} from '@vaadin/vaadin-themable-mixin/vaadin-themable-mixin.js';
 
 import {AccordionPanelElement} from './vaadin-accordion-panel.js';
-
-import {html} from '@polymer/polymer/lib/utils/html-tag.js';
 
 /**
  * `<vaadin-accordion>` is a Web Component implementing accordion widget —
@@ -54,7 +48,7 @@ import {html} from '@polymer/polymer/lib/utils/html-tag.js';
 declare class AccordionElement extends
   ElementMixin(
   ThemableMixin(
-  PolymerElement)) {
+  HTMLElement)) {
   readonly focused: Element|null;
 
   /**
@@ -70,10 +64,11 @@ declare class AccordionElement extends
    * and updated dynamically when adding or removing panels.
    */
   readonly items: AccordionPanelElement[];
-  ready(): void;
-  focus(): void;
+
   _filterItems(array: Element[]): AccordionPanelElement[];
+
   _onKeydown(event: KeyboardEvent): void;
+
   _getAvailableIndex(index: number, increment: number): number;
 }
 
