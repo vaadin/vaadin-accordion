@@ -183,19 +183,16 @@ class AccordionElement extends ThemableMixin(ElementMixin(PolymerElement)) {
       return;
     }
 
-    // IE names for arrows do not include the Arrow prefix
-    const key = event.key.replace(/^Arrow/, '');
-
     const currentIdx = this.items.indexOf(this.focused);
     let idx;
     let increment;
 
-    switch (key) {
-      case 'Up':
+    switch (event.key) {
+      case 'ArrowUp':
         increment = -1;
         idx = currentIdx - 1;
         break;
-      case 'Down':
+      case 'ArrowDown':
         increment = 1;
         idx = currentIdx + 1;
         break;
