@@ -1,7 +1,8 @@
-<link rel="import" href="../../../vaadin-material-styles/color.html">
-<link rel="import" href="../../../vaadin-details/theme/material/vaadin-details-styles.html">
+import '@vaadin/vaadin-material-styles/color.js';
+import '@vaadin/vaadin-details/theme/material/vaadin-details-styles.js';
+import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 
-<dom-module id="material-accordion-panel" theme-for="vaadin-accordion-panel">
+const $_documentContainer = html`<dom-module id="material-accordion-panel" theme-for="vaadin-accordion-panel">
   <template>
     <style include="material-details">
       :host(:not([opened])) [part="summary"]::after {
@@ -50,4 +51,6 @@
       }
     </style>
   </template>
-</dom-module>
+</dom-module>`;
+
+document.head.appendChild($_documentContainer.content);
