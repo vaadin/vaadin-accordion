@@ -25,7 +25,9 @@
     "theme"
   ],
   "scripts": {
+    "analyze": "polymer analyze vaadin-* > analysis.json",
     "debug": "web-test-runner test/*.test.js --watch",
+    "prestart": "npm run analyze",
     "screenshots": "hermione test/visual/test.js --update-refs",
     "start": "web-dev-server --node-resolve --open",
     "test": "web-test-runner test/*.test.js --coverage",
