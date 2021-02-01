@@ -1,8 +1,8 @@
 /**
-@license
-Copyright (c) 2018 Vaadin Ltd.
-This program is available under Apache License Version 2.0, available at https://vaadin.com/license/
-*/
+ * @license
+ * Copyright (c) 2021 Vaadin Ltd.
+ * This program is available under Apache License Version 2.0, available at https://vaadin.com/license/
+ */
 import { DetailsElement } from '@vaadin/vaadin-details/src/vaadin-details.js';
 
 /**
@@ -29,7 +29,6 @@ import { DetailsElement } from '@vaadin/vaadin-details/src/vaadin-details.js';
  * `focused`    | Set when the element is focused.
  *
  * See [ThemableMixin – how to apply styles for shadow parts](https://github.com/vaadin/vaadin-themable-mixin/wiki)
- *
  */
 class AccordionPanelElement extends DetailsElement {
   static get is() {
