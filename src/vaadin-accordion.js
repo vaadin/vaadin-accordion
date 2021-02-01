@@ -57,17 +57,17 @@ import { AccordionPanelElement } from './vaadin-accordion-panel.js';
 class AccordionElement extends ThemableMixin(ElementMixin(PolymerElement)) {
   static get template() {
     return html`
-    <style>
-      :host {
-        display: block;
-      }
+      <style>
+        :host {
+          display: block;
+        }
 
-      :host([hidden]) {
-        display: none !important;
-      }
-    </style>
-    <slot></slot>
-`;
+        :host([hidden]) {
+          display: none !important;
+        }
+      </style>
+      <slot></slot>
+    `;
   }
 
   static get is() {
@@ -108,9 +108,7 @@ class AccordionElement extends ThemableMixin(ElementMixin(PolymerElement)) {
   }
 
   static get observers() {
-    return [
-      '_updateItems(items, opened)'
-    ];
+    return ['_updateItems(items, opened)'];
   }
 
   constructor() {
@@ -144,12 +142,12 @@ class AccordionElement extends ThemableMixin(ElementMixin(PolymerElement)) {
   ready() {
     super.ready();
 
-    this.addEventListener('keydown', e => this._onKeydown(e));
+    this.addEventListener('keydown', (e) => this._onKeydown(e));
 
-    this._observer = new FlattenedNodesObserver(this, info => {
+    this._observer = new FlattenedNodesObserver(this, (info) => {
       this._setItems(this._filterItems(Array.from(this.children)));
 
-      this._filterItems(info.addedNodes).forEach(el => {
+      this._filterItems(info.addedNodes).forEach((el) => {
         el.addEventListener('opened-changed', this._boundUpdateOpened);
       });
     });
@@ -161,14 +159,14 @@ class AccordionElement extends ThemableMixin(ElementMixin(PolymerElement)) {
    * @protected
    */
   _filterItems(array) {
-    return array.filter(el => el instanceof AccordionPanelElement);
+    return array.filter((el) => el instanceof AccordionPanelElement);
   }
 
   /** @private */
   _updateItems(items, opened) {
     if (items) {
       const itemToOpen = items[opened];
-      items.forEach(item => {
+      items.forEach((item) => {
         item.opened = item === itemToOpen;
       });
     }
@@ -181,7 +179,7 @@ class AccordionElement extends ThemableMixin(ElementMixin(PolymerElement)) {
   _onKeydown(event) {
     // only check keyboard events on details toggle buttons
     const item = event.composedPath()[0];
-    if (!this.items.some(el => el.focusElement === item)) {
+    if (!this.items.some((el) => el.focusElement === item)) {
       return;
     }
 
@@ -207,7 +205,7 @@ class AccordionElement extends ThemableMixin(ElementMixin(PolymerElement)) {
         idx = this.items.length - 1;
         break;
       default:
-        // do nothing.
+      // do nothing.
     }
 
     idx = this._getAvailableIndex(idx, increment);
@@ -252,7 +250,7 @@ class AccordionElement extends ThemableMixin(ElementMixin(PolymerElement)) {
       }
 
       this.opened = idx;
-    } else if (!this.items.some(item => item.opened)) {
+    } else if (!this.items.some((item) => item.opened)) {
       this.opened = null;
     }
   }

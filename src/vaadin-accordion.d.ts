@@ -1,8 +1,8 @@
-import {ElementMixin} from '@vaadin/vaadin-element-mixin/vaadin-element-mixin.js';
+import { ElementMixin } from '@vaadin/vaadin-element-mixin/vaadin-element-mixin.js';
 
-import {ThemableMixin} from '@vaadin/vaadin-themable-mixin/vaadin-themable-mixin.js';
+import { ThemableMixin } from '@vaadin/vaadin-themable-mixin/vaadin-themable-mixin.js';
 
-import {AccordionPanelElement} from './vaadin-accordion-panel.js';
+import { AccordionPanelElement } from './vaadin-accordion-panel.js';
 
 /**
  * `<vaadin-accordion>` is a Web Component implementing accordion widget —
@@ -45,11 +45,8 @@ import {AccordionPanelElement} from './vaadin-accordion-panel.js';
  *
  * See [ThemableMixin – how to apply styles for shadow parts](https://github.com/vaadin/vaadin-themable-mixin/wiki)
  */
-declare class AccordionElement extends
-  ElementMixin(
-  ThemableMixin(
-  HTMLElement)) {
-  readonly focused: Element|null;
+declare class AccordionElement extends ElementMixin(ThemableMixin(HTMLElement)) {
+  readonly focused: Element | null;
 
   /**
    * The index of currently opened panel. First panel is opened by
@@ -73,10 +70,9 @@ declare class AccordionElement extends
 }
 
 declare global {
-
   interface HTMLElementTagNameMap {
-    "vaadin-accordion": AccordionElement;
+    'vaadin-accordion': AccordionElement;
   }
 }
 
-export {AccordionElement};
+export { AccordionElement };

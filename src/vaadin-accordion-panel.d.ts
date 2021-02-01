@@ -1,4 +1,4 @@
-import {DetailsElement} from '@vaadin/vaadin-details/src/vaadin-details.js';
+import { DetailsElement } from '@vaadin/vaadin-details/src/vaadin-details.js';
 
 /**
  * The accordion panel element.
@@ -25,14 +25,12 @@ import {DetailsElement} from '@vaadin/vaadin-details/src/vaadin-details.js';
  *
  * See [ThemableMixin – how to apply styles for shadow parts](https://github.com/vaadin/vaadin-themable-mixin/wiki)
  */
-declare class AccordionPanelElement extends DetailsElement {
-}
+declare class AccordionPanelElement extends DetailsElement {}
 
 declare global {
-
   interface HTMLElementTagNameMap {
-    "vaadin-accordion-panel": AccordionPanelElement;
+    'vaadin-accordion-panel': AccordionPanelElement;
   }
 }
 
-export {AccordionPanelElement};
+export { AccordionPanelElement };
