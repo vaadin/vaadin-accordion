@@ -252,12 +252,6 @@ class AccordionElement extends ThemableMixin(ElementMixin(PolymerElement)) {
       }
 
       this.opened = idx;
-
-      this.items.forEach(item => {
-        if (item !== target && item.opened) {
-          item.opened = false;
-        }
-      });
     } else if (!this.items.some(item => item.opened)) {
       this.opened = null;
     }
