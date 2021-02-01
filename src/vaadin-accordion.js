@@ -50,6 +50,9 @@ import { AccordionPanelElement } from './vaadin-accordion-panel.js';
  *
  * See [ThemableMixin – how to apply styles for shadow parts](https://github.com/vaadin/vaadin-themable-mixin/wiki)
  *
+ * @fires {CustomEvent} items-changed - Fired when the `items` property changes.
+ * @fires {CustomEvent} opened-changed - Fired when the `opened` property changes.
+ *
  * @extends HTMLElement
  * @mixes ElementMixin
  * @mixes ThemableMixin

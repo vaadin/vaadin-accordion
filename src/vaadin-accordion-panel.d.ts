@@ -24,6 +24,8 @@ import { DetailsElement } from '@vaadin/vaadin-details/src/vaadin-details.js';
  * `focused`    | Set when the element is focused.
  *
  * See [ThemableMixin – how to apply styles for shadow parts](https://github.com/vaadin/vaadin-themable-mixin/wiki)
+ *
+ * @fires {CustomEvent} opened-changed - Fired when the `opened` property changes.
  */
 declare class AccordionPanelElement extends DetailsElement {}
 
