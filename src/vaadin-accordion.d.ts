@@ -5,6 +5,24 @@ import { ThemableMixin } from '@vaadin/vaadin-themable-mixin/vaadin-themable-mix
 import { AccordionPanelElement } from './vaadin-accordion-panel.js';
 
 /**
+ * Fired when the `items` property changes.
+ */
+export type AccordionItemsChanged = CustomEvent<{ value: AccordionPanelElement[] }>;
+
+/**
+ * Fired when the `opened` property changes.
+ */
+export type AccordionOpenedChanged = CustomEvent<{ value: number | null }>;
+
+export interface AccordionElementEventMap {
+  'items-changed': AccordionItemsChanged;
+
+  'opened-changed': AccordionOpenedChanged;
+}
+
+export type AccordionEventMap = HTMLElementEventMap & AccordionElementEventMap;
+
+/**
  * `<vaadin-accordion>` is a Web Component implementing accordion widget —
  * a vertically stacked set of expandable panels. The component should be
  * used as a wrapper for two or more `<vaadin-accordion-panel>` components.
@@ -67,6 +85,18 @@ declare class AccordionElement extends ElementMixin(ThemableMixin(HTMLElement)) 
   _onKeydown(event: KeyboardEvent): void;
 
   _getAvailableIndex(index: number, increment: number): number;
+
+  addEventListener<K extends keyof AccordionEventMap>(
+    type: K,
+    listener: (this: AccordionElement, ev: AccordionEventMap[K]) => void,
+    options?: boolean | AddEventListenerOptions
+  ): void;
+
+  removeEventListener<K extends keyof AccordionEventMap>(
+    type: K,
+    listener: (this: AccordionElement, ev: AccordionEventMap[K]) => void,
+    options?: boolean | EventListenerOptions
+  ): void;
 }
 
 declare global {
