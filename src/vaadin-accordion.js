@@ -133,9 +133,11 @@ class AccordionElement extends ThemableMixin(ElementMixin(PolymerElement)) {
     if (this._observer) {
       this._observer.flush();
     }
-    const focusable = Array.isArray(this.items) && this.items[0];
-    if (focusable) {
-      focusable.focus();
+    if (Array.isArray(this.items)) {
+      const idx = this._getAvailableIndex(0);
+      if (idx >= 0) {
+        this.items[idx].focus();
+      }
     }
   }
 
