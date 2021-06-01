@@ -1,0 +1,71 @@
+name: Quick QA
+
+# all pull requests
+on: pull_request
+
+jobs:
+  unit-tests-p2:
+    name: Unit Tests (Polymer 2)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Node 12.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12.x
+
+      - name: Check out the source code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Install global npm dependencies
+        # bower is needed to run 'bower install'
+        # polymer-cli is needed to run the lint step
+        # web-component-tester is needed to run the test step
+        run: "npm install --quiet --no-progress --global bower polymer-cli web-component-tester"
+
+      - name: Install project npm dependencies
+        run: "npm install --quiet --no-progress"
+
+      - name: Install project Bower dependencies
+        run: "bower install --quiet"
+
+      - name: Run automated magi-cli checks
+        run: "npm run check"
+
+      - name: Run a linter
+        run: "npm run lint"
+
+      - name: Run unit tests locally (in the VM instance running this job)
+        run: "xvfb-run -s '-screen 0 1024x768x24' wct"
+
+  unit-tests-p3:
+    name: Unit Tests (Polymer 3)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Node 12.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12.x
+
+      - name: Check out the (Polymer 2) source code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Install global npm dependencies
+        # magi-cli, bower and polymer-modulizer are needed to run the Polymer 3 conversion step
+        # web-component-tester is needed to run the test step
+        run: "npm install --quiet --no-progress --global bower magi-cli web-component-tester polymer-modulizer"
+
+      - name: Convert the source code to Polymer 3
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          magi p3-convert --out . --import-style=name
+
+      - name: Install project npm dependencies
+        run: "yarn install --flat"
+
+      - name: Run unit tests locally (in the VM instance running this job)
+        run: "xvfb-run -s '-screen 0 1024x768x24' wct --npm"
