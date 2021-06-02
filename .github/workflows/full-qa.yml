@@ -1,17 +1,11 @@
 name: Full QA
 
 on:
-  # new commits pushed to release branches
+  # new commits pushed to the release branches
   push:
     branches:
       - "master" # pushes to the `master` branch
       - "*.*" # pushes to the released version branches (e.g. `1.0`)
-
-  # every night for the `master` branch
-  # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#onschedule
-  schedule:
-    # * is a special character in YAML so you have to quote this string
-    - cron: "30 4 * * *" # 4:30AM every night
 
 jobs:
   unit-tests-p2:
@@ -47,15 +41,7 @@ jobs:
         run: "npm run lint"
 
       - name: Run unit tests on SauceLabs
-        if: ${{ github.event != 'schedule' }}
         run: "wct --env saucelabs"
-        env:
-          SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
-          SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
-
-      - name: Run unit tests on SauceLabs (cron)
-        if: ${{ github.event == 'schedule' }}
-        run: "wct --env saucelabs-cron"
         env:
           SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
           SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
@@ -89,15 +75,7 @@ jobs:
         run: "yarn install --flat"
 
       - name: Run unit tests on SauceLabs
-        if: ${{ github.event != 'schedule' }}
         run: "wct --npm --env saucelabs"
-        env:
-          SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
-          SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
-
-      - name: Run unit tests on SauceLabs (cron)
-        if: ${{ github.event == 'schedule' }}
-        run: "wct --npm --env saucelabs-cron"
         env:
           SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
           SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
