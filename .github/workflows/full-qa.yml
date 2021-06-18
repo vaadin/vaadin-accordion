@@ -19,8 +19,6 @@ jobs:
 
       - name: Check out the source code
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
 
       - name: Install global npm dependencies
         # bower is needed to run 'bower install'
@@ -57,8 +55,6 @@ jobs:
 
       - name: Check out the (Polymer 2) source code
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
 
       - name: Install global npm dependencies
         # magi-cli, bower and polymer-modulizer are needed to run the Polymer 3 conversion step
@@ -91,8 +87,6 @@ jobs:
 
       - name: Check out the source code
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
 
       - name: Install global npm dependencies
         # bower is needed to run 'bower install'
