@@ -1,15 +1,11 @@
 name: Full QA
 
-on:
-  # new commits pushed to the release branches
-  push:
-    branches:
-      - "master" # pushes to the `master` branch
-      - "*.*" # pushes to the released version branches (e.g. `1.0`)
+# all pull requests
+on: pull_request
 
 jobs:
   unit-tests-p2:
-    name: Unit Tests (Polymer 2)
+    name: Unit Tests / Polymer 2 on the CI agent
     runs-on: ubuntu-latest
     steps:
       - name: Set up Node 12.x
@@ -38,14 +34,12 @@ jobs:
       - name: Run a linter
         run: "npm run lint"
 
-      - name: Run unit tests on SauceLabs
-        run: "wct --env saucelabs"
-        env:
-          SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
-          SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
+      # the full set of environments is tested with Polymer 3 below
+      - name: Run unit tests locally (in the VM instance running this job)
+        run: "xvfb-run -s '-screen 0 1024x768x24' wct"
 
   unit-tests-p3:
-    name: Unit Tests (Polymer 3)
+    name: Unit Tests / Polymer 3 on SauceLabs
     runs-on: ubuntu-latest
     steps:
       - name: Set up Node 12.x
@@ -73,6 +67,10 @@ jobs:
       - name: Install project npm dependencies
         run: "yarn install --flat"
 
+      # workaround for running tests on Android on SauceLabs (see wct.conf.js)
+      - name: Add 'localhost-for-saucelabs' to /etc/hosts
+        run: echo "127.0.0.1 localhost-for-saucelabs" | sudo tee -a /etc/hosts
+
       - name: Run unit tests on SauceLabs
         run: "wct --npm --env saucelabs"
         env:
@@ -80,7 +78,7 @@ jobs:
           SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
 
   visual-tests:
-    name: Visual Tests (Polymer 2)
+    name: Visual Tests on SauceLabs
     runs-on: ubuntu-latest
     steps:
       - name: Set up Node 12.x
