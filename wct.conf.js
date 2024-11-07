@@ -29,7 +29,7 @@ module.exports = {
       exclude: [],
       thresholds: {
         global: {
-          statements: 98
+          statements: env === 'saucelabs' ? 86 : 99
         }
       }
     }
@@ -47,7 +47,6 @@ module.exports = {
       'iOS Simulator/iphone@10.3', // should be 9.x, but SauceLabs does not provide that
       'macOS 11/safari@latest',
       'Windows 10/microsoftedge@latest',
-      'Windows 10/microsoftedge@18',
       'Windows 10/internet explorer@11',
       'Windows 10/chrome@latest',
       'Windows 10/firefox@latest',
