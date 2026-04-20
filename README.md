@@ -1,3 +1,6 @@
+This is a tests for CLA
+
+
 # &lt;vaadin-accordion&gt;
 
 > ⚠️ Starting from Vaadin 20, the source code and issues for this component are migrated to the [`vaadin/web-components`](https://github.com/vaadin/web-components/tree/master/packages/vaadin-accordion) monorepository.
